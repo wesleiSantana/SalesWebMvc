@@ -1,19 +1,50 @@
 using Microsoft.AspNetCore.Mvc;
-using System.Collections.Generic;
 using SalesWebMvc.Models;
+using System.Threading.Tasks;
+using Microsoft.EntityFrameworkCore;
 
 namespace SalesWebMvc.Controllers
 {
     public class DepartmentsController : Controller 
     {
-        public IActionResult Index()
-        {
-            List<Department> departments = new List<Department>();
-            departments.Add(new Department() { Id = 1, Name = "Eletronicos" });
-            departments.Add(new Department() { Id = 2, Name = "Casa mesa e banho" });
-            departments.Add(new Department() { Id = 3, Name = "Roupas" });
+        private readonly SalesWebMvcContext _context;
 
-            return View(departments);
+        public DepartmentsController(SalesWebMvcContext context)
+        {
+            this._context = context;
         }
+
+        public async Task<IActionResult> Index()
+        {
+            return View(await this._context.Department.ToListAsync());
+        }
+
+        public async Task<IActionResult> Details(int? id)
+        {
+            if(id == null) return NotFound();
+
+            var department = await this._context.Department.FirstOrDefaultAsync(m => m.Id == id);
+            if(department == null) return NotFound();
+
+            return View(department);
+        }
+
+        public IActionResult Create()
+        {
+            return View();
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> Create([Bind("Id, Name")] Department department)
+        {
+            if(ModelState.IsValid) 
+            {
+                this._context.Add(department);
+                await this._context.SaveChangesAsync();
+                return RedirectToAction(nameof(Index));
+            }
+            return View(department);
+        }       
     }
 }

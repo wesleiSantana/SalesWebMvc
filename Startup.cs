@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using SalesWebMvc.Models;
 
 namespace SalesWebMvc
 {
@@ -24,8 +25,13 @@ namespace SalesWebMvc
                 options.MinimumSameSitePolicy = SameSiteMode.None;
             });
 
-
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
+
+            services.AddDbContext<SalesWebMvcContext>(
+                options => options.UseMySql(Configuration.GetConnectionString("SalesWebMvcContext"),
+                    builder => builder.MigrationAssembly("SaleswebMvc")
+                )
+            );
         }
 
         public void Configure(IApplicationBuilder app, IHostingEnvironment env)
