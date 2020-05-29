@@ -27,11 +27,11 @@ namespace SalesWebMvc
 
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
 
-            services.AddDbContext<SalesWebMvcContext>(
-                options => options.UseMySql(Configuration.GetConnectionString("SalesWebMvcContext"),
-                    builder => builder.MigrationAssembly("SaleswebMvc")
-                )
-            );
+            // services.AddDbContext<SalesWebMvcContext>(
+            //     options => options.UseMySql(Configuration.GetConnectionString("SalesWebMvcContext"),
+            //         builder => builder.MigrationAssembly("SaleswebMvc")
+            //     )
+            // );
         }
 
         public void Configure(IApplicationBuilder app, IHostingEnvironment env)
