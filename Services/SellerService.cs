@@ -19,7 +19,7 @@ namespace SalesWebMvc.Services
         }
 
         public void Insert(Seller seller)
-        {
+        {            
             this._context.Add(seller);
             this._context.SaveChanges();
         }
