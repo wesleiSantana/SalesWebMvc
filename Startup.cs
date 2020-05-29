@@ -6,6 +6,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using SalesWebMvc.Data;
 using SalesWebMvc.Models;
+using SalesWebMvc.Services;
 
 namespace SalesWebMvc
 {
@@ -35,6 +36,7 @@ namespace SalesWebMvc
             // );
 
             services.AddScoped<SeedingService>();
+            services.AddScoped<SellerService>();
         }
 
         public void Configure(IApplicationBuilder app, IHostingEnvironment env, SeedingService seedingService)
