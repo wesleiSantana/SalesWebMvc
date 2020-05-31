@@ -23,7 +23,7 @@ namespace SalesWebMvc.Controllers
         {
             var list = this._serviceService.FindAll();
             return View(list);
-        } 
+        }
 
         public IActionResult Create()
         {
@@ -36,6 +36,13 @@ namespace SalesWebMvc.Controllers
         [ValidateAntiForgeryToken]
         public IActionResult Create(Seller seller)
         {
+            if (!ModelState.IsValid)
+            {
+                var departments = this._departmentService.FindAll();
+                var viewModel = new SellerFormViewModel { Seller = seller, departments = departments };
+                return View(viewModel);
+            }
+
             this._serviceService.Insert(seller);
             return RedirectToAction(nameof(Index));
         }
@@ -85,6 +92,13 @@ namespace SalesWebMvc.Controllers
         [ValidateAntiForgeryToken]
         public IActionResult Edit(int id, Seller seller)
         {
+            if (!ModelState.IsValid)
+            {
+                var departments = this._departmentService.FindAll();
+                var viewModel = new SellerFormViewModel { Seller = seller, departments = departments };
+                return View(viewModel);
+            }
+
             if (id != seller.Id) return RedirectToAction(nameof(Error), new { message = "Id mismatch" });
 
             try
