@@ -39,10 +39,10 @@ namespace SalesWebMvc.Controllers
 
         public IActionResult Delete(int? id)
         {
-            if(id == null) return NotFound();
+            if (id == null) return NotFound();
 
             var obj = this._serviceService.FindById(id.Value);
-            if(obj == null) return NotFound();
+            if (obj == null) return NotFound();
 
             return View(obj);
         }
@@ -54,6 +54,18 @@ namespace SalesWebMvc.Controllers
             this._serviceService.Remove(id);
             return RedirectToAction(nameof(Index));
         }
+
+        public IActionResult Details(int? id)
+        {
+            if (id == null) return NotFound();
+
+            var obj = this._serviceService.FindById(id.Value);
+            if (obj == null) return NotFound();
+
+            return View(obj);
+        }
+
+
 
     }
 }
