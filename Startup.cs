@@ -44,6 +44,7 @@ namespace SalesWebMvc
             services.AddScoped<SeedingService>();
             services.AddScoped<SellerService>();
             services.AddScoped<DepartmentService>();
+            services.AddScoped<SalesRecordServices>();
         }
 
         public void Configure(IApplicationBuilder app, IHostingEnvironment env, SeedingService seedingService)
